@@ -1,80 +1,40 @@
-body{
-    display:flex;
+html {
+    text-align: center;
+}
+#calculator {
+    display: flex;    min-height: 95vh;
     justify-content: center;
+    align-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
+    background-color: aliceblue;
 }
-.calculator {
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: cadetblue;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 260px;
+#container {
+    background-color: darkolivegreen;
+    border: 10px solid darkolivegreen;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 80px);
+    gap: 2px;
 }
 #display {
-    width: 100%;
-    height: 50px;
+    grid-column: 1 / -1;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 5px;
     font-size: 20px;
-    text-align: right;
-    margin-bottom: 10px;
-    border: 1px solid #333;
+    font-weight: initial;
+    margin: 5px;
+}
+button{
+    margin: 1px;
     border-radius: 5px;
-}
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 60px) 80px;
-    grid-template-areas: 
-        "clear num1 num2 num3"
-        "num4 num5 num6 plus"
-        "num7 num8 num9 minus"
-        "zero dot equal multiply"
-        "equal equal equal divide";
-    grid-gap:10px;
-}
-.number-buttons{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-    grid-column: span 3;
-}
-.operator-buttons{
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 10px;
-}
-
-button {
-    height: 60px;
-    font-size: 24px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    font-weight: initial;
+    color: black;
 }
-button:hover {
-    background-color: #f0f0f0
-}
-
-.equals {
-    grid-column: span 4;
-}
-
-.clear { grid-area: clear; }
-.num1 { grid-area: num1; }
-.num2 { grid-area: num2; }
-.num3 { grid-area: num3; }
-.num4 { grid-area: num4; }
-.num5 { grid-area: num5; }
-.num6 { grid-area: num6; }
-.num7 { grid-area: num7; }
-.num8 { grid-area: num8; }
-.num9 { grid-area: num9; }
-.zero { grid-area: zero; }
-.dot { grid-area: dot; }
-
-.plus { grid-area: plus; }
-.minus { grid-area: minus; }
-.multiply { grid-area: multiply; }
-.divide { grid-area: divide; }
