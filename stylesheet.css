@@ -11,6 +11,7 @@ html {
     background-color: aliceblue;
 }
 #container {
+    position: relative;
     background-color: darkolivegreen;
     border: 10px solid darkolivegreen;
     border-radius: 4px;
@@ -21,13 +22,13 @@ html {
 }
 #display {
     grid-column: 1 / -1;
-    background-color: gray;
+    background-color: lightgrey;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-end;
     padding: 5px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: initial;
     margin: 5px;
 }
@@ -35,6 +36,10 @@ button{
     margin: 1px;
     border-radius: 5px;
     border: none;
+    font-size: 20px;
     font-weight: initial;
     color: black;
+}
+#zero {
+    grid-column: span 2;
 }
