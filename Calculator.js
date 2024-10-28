@@ -3,6 +3,7 @@ const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
+let inputs = [];
 let firstNumber = null;
 let operator = null;
 let displayValue = '0';
@@ -12,7 +13,7 @@ const buttons = document.querySelectorAll('button');
 const display = document.getElementById('display');
 
 function displayUpdate() {
-    display.innerText = displayValue;
+    display.innerText = displayValue + operatorDisplay;
 }
 
 function inputNumber(number) {
@@ -26,26 +27,50 @@ function inputNumber(number) {
 
 function inputOperator(op) {
     const currentNumber = parseFloat(displayValue);
-    if (firstNumber !== null && operator !== null) {
-        inputEquals();
+    if (!isNaN(currentNumber)) {
+        inputs.push(currentNumber);
+        inputs.push(op);
+        operatorDisplay = ` ${op} `;
+        displayValue = '';
+        displayUpdate();
     }
-    operator = op;
-    firstNumber = currentNumber;
-    operatorDisplay = `${op}`;
-    displayValue = '0';
-    displayUpdate();
 }
 
 function inputEquals() {
-    const secondNumber = parseFloat(displayValue);
-    if (firstNumber !== null && operator !== null && !isNaN(secondNumber)) {
-        displayValue = operate(firstNumber, operator, secondNumber).toString();
-        firstNumber = null;
-        operator = null;
-    } else {
-        displayValue = 'Error';
+    const currentNumber = parseFloat(displayValue);
+    if (!isNaN(currentNumber)) {
+        inputs.push(currentNumber);
     }
+    const result = calculateWithPrecedence(inputs);
+    displayValue = result === 'Error' ? 'Error' : result.toString();
+    inputs = [];
+    operatorDisplay = '';
     displayUpdate();
+}
+
+function calculateWithPrecedence(inputs) {
+    const operators = { '+': add, '-': subtract, '*': multiply, '/': divide };
+    let newInputs = [];
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i] === '*' || inputs[i] === '/') {
+            const prevNumber = newInputs.pop();
+            const nextNumber = inputs[i + 1];
+            if (inputs[i] === '/' && nextNumber === 0) return 'Error';
+            const result = operators[inputs[i]](prevNumber, nextNumber);
+            newInputs.push(result);
+            i++;
+        } else {
+            newInputs.push(inputs[i]);
+        }
+    }
+    let result = newInputs[0];
+    for (let i = 1; i < newInputs.length; i += 2) {
+        const operator = newInputs[i];
+        const nextNumber = newInputs[i + 1];
+        result = operators[operator](result, nextNumber);
+    }
+
+    return result;
 }
 
 function inputDecimal() {
@@ -63,7 +88,7 @@ function operate(firstNumber, operator, secondNumber) {
         case '*':
             return multiply(firstNumber, secondNumber);
         case '/':
-            return divide(firstNumber, secondNumber);
+            return secondNumber === 0 ? 'Error' : divide(firstNumber, secondNumber);
         default:
             return 'Error';
     }
